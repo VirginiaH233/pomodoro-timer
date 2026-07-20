@@ -1,8 +1,9 @@
 """Settings dialog for Pomodoro Timer — resizable window, follows overlay theme."""
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 from config import PomodoroConfig, COLOR_PRESETS
 from lang import _
+from sound import play_sound, SOUND_CHOICES, SOUND_LABELS_EN, SOUND_LABELS_ZH
 
 
 def _rgb(t):
@@ -63,6 +64,11 @@ class SettingsDialog:
         self.topmost_var = tk.BooleanVar(value=config.always_on_top)
         self.reward_var = tk.BooleanVar(value=config.reward_enabled)
         self.lang_var = tk.StringVar(value=config.language)
+
+        # Sound variables
+        self.sound_work_var = tk.StringVar(value=config.sound_work or "beep")
+        self.sound_short_var = tk.StringVar(value=config.sound_short_break or "beep_done")
+        self.sound_long_var = tk.StringVar(value=config.sound_long_break or "beep_done")
 
         # Custom name variables
         self.name_work_var = tk.StringVar(value=config.custom_name_work or "")
@@ -208,6 +214,15 @@ class SettingsDialog:
         self._row(scroll_frame, "lbl_language",
                   lambda f: self._lang_combo(f).pack(side="left"))
 
+        # 🔊 Sound
+        self._sect(scroll_frame, "sect_sound")
+        self._row(scroll_frame, "lbl_sound_work",
+                  lambda f: self._sound_combo(f, self.sound_work_var).pack(side="left"))
+        self._row(scroll_frame, "lbl_sound_short_break",
+                  lambda f: self._sound_combo(f, self.sound_short_var).pack(side="left"))
+        self._row(scroll_frame, "lbl_sound_long_break",
+                  lambda f: self._sound_combo(f, self.sound_long_var).pack(side="left"))
+
         # 🎉 Rewards
         self._sect(scroll_frame, "sect_rewards")
         self._row(scroll_frame, "", lambda f: self._chk(f, "lbl_reward", self.reward_var))
@@ -276,6 +291,40 @@ class SettingsDialog:
             f"{int(self.opacity_var.get() * 100)}%"))
         return lbl
 
+    # ── sound ───────────────────────────────────────
+
+    def _sound_combo(self, parent, var):
+        """Combobox for sound selection. Last option opens file browser."""
+        labels = SOUND_LABELS_ZH if self.language == "zh" else SOUND_LABELS_EN
+        choices = SOUND_CHOICES
+        combo = ttk.Combobox(parent, values=labels + [_("sound_custom", self.language)],
+                             state="readonly", width=16, font=("Segoe UI", 10))
+        # Map current var value to index
+        cur = var.get()
+        idx = choices.index(cur) if cur in choices else len(choices)
+        combo.current(idx)
+
+        def _on_select(event):
+            sel = combo.current()
+            if sel < len(choices):
+                var.set(choices[sel])
+                # Preview
+                play_sound(choices[sel])
+            else:
+                # Browse
+                fp = filedialog.askopenfilename(
+                    title=_("sound_custom", self.language),
+                    filetypes=[("WAV files", "*.wav"), ("All files", "*.*")],
+                )
+                if fp:
+                    var.set(fp)
+                    play_sound(fp)
+                    # Update combo text to show filename
+                    combo.set(_("sound_custom_set", self.language))
+
+        combo.bind("<<ComboboxSelected>>", _on_select)
+        return combo
+
     # ── save ────────────────────────────────────────
 
     def _save(self):
@@ -291,6 +340,9 @@ class SettingsDialog:
         self.config.always_on_top = self.topmost_var.get()
         self.config.reward_enabled = self.reward_var.get()
         self.config.language = self.lang_var.get()
+        self.config.sound_work = self.sound_work_var.get()
+        self.config.sound_short_break = self.sound_short_var.get()
+        self.config.sound_long_break = self.sound_long_var.get()
         self.config.custom_name_work = self.name_work_var.get().strip()
         self.config.custom_name_short_break = self.name_short_var.get().strip()
         self.config.custom_name_long_break = self.name_long_var.get().strip()

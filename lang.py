@@ -54,6 +54,7 @@ LANG = {
         "sect_names": "📛  CUSTOM NAMES",
         "sect_behavior": "⚙  BEHAVIOR",
         "sect_appearance": "🎨  APPEARANCE",
+        "sect_sound": "🔊  SOUND",
         "sect_rewards": "🎉  REWARDS",
 
         # Settings labels
@@ -74,6 +75,18 @@ LANG = {
         "lbl_topmost": "Always on top",
         "lbl_reward": "Show celebration on work complete",
         "lbl_language": "Language",
+
+        # Sound labels
+        "lbl_sound_work": "Work done →",
+        "lbl_sound_short_break": "Short break →",
+        "lbl_sound_long_break": "Long break →",
+        "sound_none": "🔇 Silent",
+        "sound_beep": "🔔 Beep",
+        "sound_beep_done": "🔔↑ Done!",
+        "sound_bell": "🔔 Bell",
+        "sound_chime": "🎵 Chime",
+        "sound_custom": "... Browse .wav",
+        "sound_custom_set": "... Custom",
 
         # Settings buttons
         "save": "💾  Save",
@@ -134,6 +147,7 @@ LANG = {
         "sect_names": "📛 自定义名称",
         "sect_behavior": "⚙ 行为设置",
         "sect_appearance": "🎨 外观设置",
+        "sect_sound": "🔊 提示音",
         "sect_rewards": "🎉 庆祝奖励",
 
         "lbl_work_duration": "工作时间",
@@ -153,6 +167,18 @@ LANG = {
         "lbl_topmost": "浮窗不被遮挡",
         "lbl_reward": "完成工作时显示庆祝动画",
         "lbl_language": "语言",
+
+        # Sound labels
+        "lbl_sound_work": "工作完成 →",
+        "lbl_sound_short_break": "短休息 →",
+        "lbl_sound_long_break": "长休息 →",
+        "sound_none": "🔇 静音",
+        "sound_beep": "🔔 蜂鸣",
+        "sound_beep_done": "🔔↑ 完成！",
+        "sound_bell": "🔔 铃声",
+        "sound_chime": "🎵 叮咚",
+        "sound_custom": "📂 选择 .wav...",
+        "sound_custom_set": "📂 自定义",
 
         "save": "💾 保存",
         "cancel": "取消",

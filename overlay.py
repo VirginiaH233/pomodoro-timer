@@ -16,6 +16,7 @@ from pomtimer import PomodoroTimer, Phase
 from config import PomodoroConfig, COLOR_PRESETS
 from settings import SettingsDialog
 from lang import _
+from sound import play_sound
 
 
 # ── Windows effects ─────────────────────────────────
@@ -787,6 +788,11 @@ class PomodoroOverlay:
         if nk == self._notify_key:
             return
         self._notify_key = nk
+
+        # Play phase-transition sound (skip IDLE → WORK which happens on manual start)
+        sound_key = getattr(self.config, f"sound_{phase.name.lower()}", "beep_done")
+        play_sound(sound_key)
+
         if phase in (Phase.SHORT_BREAK, Phase.LONG_BREAK):
             if self.config.reward_enabled:
                 self._show_reward()

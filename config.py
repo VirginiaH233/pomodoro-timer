@@ -69,6 +69,11 @@ class PomodoroConfig:
     embed_enabled: bool = True
     language: str = "中文"
 
+    # Sounds
+    sound_work: str = "beep"
+    sound_short_break: str = "beep_done"
+    sound_long_break: str = "beep_done"
+
     # Rewards
     reward_enabled: bool = True
     reward_duration_sec: int = 3
@@ -103,6 +108,7 @@ class PomodoroConfig:
             "embed_enabled",
             "language",
             "reward_enabled", "reward_duration_sec",
+            "sound_work", "sound_short_break", "sound_long_break",
         )
         data = {k: getattr(self, k) for k in keys}
         with open(self.CONFIG_FILE, "w", encoding="utf-8") as f:
