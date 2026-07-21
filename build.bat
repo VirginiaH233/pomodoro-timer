@@ -4,7 +4,7 @@ echo 🍅 Building Pomodoro Timer...
 echo.
 
 pyinstaller --onefile --windowed --noconfirm ^
-    --name "PomodoroTimer" ^
+    --name "Pomi" ^
     --collect-all pystray ^
     --collect-all PIL ^
     --hidden-import win32gui ^

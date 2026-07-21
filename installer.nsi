@@ -25,13 +25,13 @@ Section "Install"
   SetOutPath "$INSTDIR"
   ExecWait 'taskkill /f /im PomodoroTimer.exe' $0
 
-  File "dist\PomodoroTimer.exe"
+  File "dist\Pomi.exe"
   File "README.md"
 
   CreateDirectory "$SMPROGRAMS\Pomi"
-  CreateShortCut "$SMPROGRAMS\Pomi\Pomi.lnk" "$INSTDIR\PomodoroTimer.exe"
+  CreateShortCut "$SMPROGRAMS\Pomi\Pomi.lnk" "$INSTDIR\Pomi.exe"
   CreateShortCut "$SMPROGRAMS\Pomi\Uninstall.lnk" "$INSTDIR\uninst.exe"
-  CreateShortCut "$DESKTOP\Pomi.lnk" "$INSTDIR\PomodoroTimer.exe"
+  CreateShortCut "$DESKTOP\Pomi.lnk" "$INSTDIR\Pomi.exe"
 
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Pomi" \
@@ -46,7 +46,7 @@ SectionEnd
 
 Section "Uninstall"
   ExecWait 'taskkill /f /im PomodoroTimer.exe' $0
-  Delete "$INSTDIR\PomodoroTimer.exe"
+  Delete "$INSTDIR\Pomi.exe"
   Delete "$INSTDIR\README.md"
   Delete "$INSTDIR\uninst.exe"
   RMDir "$INSTDIR"
