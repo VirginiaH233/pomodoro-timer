@@ -50,16 +50,18 @@ def _set_window_alpha(hwnd: int, opacity: float):
 
 
 def _force_topmost(hwnd: int):
-    """Force window to HWND_TOPMOST via Win32, more reliable than tkinter -topmost."""
+    """Reliably push window above the taskbar — re-enter topmost + activate briefly."""
     try:
+        user32 = ctypes.windll.user32
         HWND_TOPMOST = -1
-        SWP_NOACTIVATE = 0x0010
-        SWP_NOSIZE = 0x0001
         SWP_NOMOVE = 0x0002
-        ctypes.windll.user32.SetWindowPos(
-            hwnd, HWND_TOPMOST, 0, 0, 0, 0,
-            SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE,
-        )
+        SWP_NOSIZE = 0x0001
+        # Step 1: remove from topmost
+        user32.SetWindowPos(hwnd, ctypes.c_int(-2),  # HWND_NOTOPMOST
+                           0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | 0x0010)
+        # Step 2: re-enter topmost — this forces the z-order to recalculate
+        user32.SetWindowPos(hwnd, HWND_TOPMOST,
+                           0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)
     except Exception:
         pass
 
