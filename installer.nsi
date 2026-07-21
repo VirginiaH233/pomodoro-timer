@@ -24,6 +24,7 @@ RequestExecutionLevel admin
 Section "Install"
   SetOutPath "$INSTDIR"
   ExecWait 'taskkill /f /im PomodoroTimer.exe' $0
+  ExecWait 'taskkill /f /im Pomi.exe' $0
 
   File "dist\Pomi.exe"
   File "README.md"
@@ -46,6 +47,7 @@ SectionEnd
 
 Section "Uninstall"
   ExecWait 'taskkill /f /im PomodoroTimer.exe' $0
+  ExecWait 'taskkill /f /im Pomi.exe' $0
   Delete "$INSTDIR\Pomi.exe"
   Delete "$INSTDIR\README.md"
   Delete "$INSTDIR\uninst.exe"
