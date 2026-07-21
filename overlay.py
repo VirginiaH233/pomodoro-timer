@@ -50,18 +50,23 @@ def _set_window_alpha(hwnd: int, opacity: float):
 
 
 def _force_topmost(hwnd: int):
-    """Reliably push window above the taskbar — re-enter topmost + activate briefly."""
+    """Check if window is covered, then re-enter topmost only if needed."""
     try:
         user32 = ctypes.windll.user32
+        # Get the window directly above us in z-order
+        GW_HWNDPREV = 3
+        above = user32.GetWindow(hwnd, GW_HWNDPREV)
+        if above == 0:
+            return  # Already on top — nothing to do
+        # Covered! Remove + re-enter topmost to push back on top
+        HWND_NOTOPMOST = ctypes.c_int(-2)
         HWND_TOPMOST = -1
-        SWP_NOMOVE = 0x0002
-        SWP_NOSIZE = 0x0001
-        # Step 1: remove from topmost
-        user32.SetWindowPos(hwnd, ctypes.c_int(-2),  # HWND_NOTOPMOST
-                           0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | 0x0010)
-        # Step 2: re-enter topmost — this forces the z-order to recalculate
+        NOMOVE_NOSIZE = 0x0002 | 0x0001
+        NOACTIVATE = 0x0010
+        user32.SetWindowPos(hwnd, HWND_NOTOPMOST,
+                           0, 0, 0, 0, NOMOVE_NOSIZE | NOACTIVATE)
         user32.SetWindowPos(hwnd, HWND_TOPMOST,
-                           0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE)
+                           0, 0, 0, 0, NOMOVE_NOSIZE)
     except Exception:
         pass
 
