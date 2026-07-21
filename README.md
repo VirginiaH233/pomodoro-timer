@@ -1,91 +1,92 @@
-# 🍅 Pomodoro Timer — Windows 桌面番茄钟
+<div align="center">
+  <h1>🍅 Pomodoro Timer</h1>
+  <p><b>极简 · 玻璃浮窗番茄钟</b></p>
+  <p>
+    <img src="https://img.shields.io/badge/python-3.11+-blue?logo=python">
+    <img src="https://img.shields.io/badge/platform-windows-lightgrey?logo=windows">
+    <img src="https://img.shields.io/github/license/VirginiaH233/pomodoro-timer">
+  </p>
+  <br>
+</div>
 
-半透明玻璃浮窗番茄钟，常驻屏幕右下角，自由拖拽缩放。
+一个**极致的极简番茄钟**——没有窗口、没有任务栏按钮、没有多余设置。只有一块半透明的玻璃浮窗，安静地停在你的屏幕角落。
 
-## 功能
+---
 
-- **玻璃半透明浮窗** — 不占任务栏空间，存在感极低
-- **7 种颜色预设** — ☀️ Light / 🌙 Dark / 💙 Blue / 🌿 Mint / 💜 Purple / 🍑 Peach / 🪨 Slate
-- **自由拖拽缩放** — 按住任意位置拖拽移动，拖拽右下角调整大小
-- **标准番茄周期** — 25min 工作 → 5min 短休 → 15min 长休（可自定义）
-- **系统托盘图标** — 通知区域常驻，右键即可操作
-- **图形化设置面板** — 所有参数在设置对话框中可视化调整
-- **完成庆祝效果** — 工作阶段完成时浮窗闪烁 🎉 动画
-- **Windows 气泡通知** — 阶段切换时系统托盘弹出提示
+## ✨ 特色
 
-## 快速开始
+| | |
+|---|---|
+| 🪟 **玻璃浮窗** | 半透明磨砂玻璃效果，存在感趋近于零 |
+| 🎨 **7 套配色** | Light · Dark · Blue · Mint · Purple · Peach · Slate |
+| 🖱 **拖拽缩放** | 任意位置移动，右下角 `╲` 把手调整大小 |
+| ⏱ **标准番茄** | 25+5+15 分钟周期，全参数可自定义 |
+| 🎉 **完成庆祝** | 每完成一个番茄，浮窗闪烁庆祝动画 |
+| 🖥 **系统托盘** | 右下角常驻图标，右键即出菜单 |
+| ⚙️ **设置面板** | 图形化配置，无需编辑 JSON 文件 |
+| 🎯 **零干扰** | 没有窗口边框、没有任务栏入口、不抢焦点 |
+
+---
+
+## ⚡ 快速开始
+
+### 一键启动（推荐）
+
+下载 [PomodoroTimer.exe](https://github.com/VirginiaH233/pomodoro-timer/releases)（单文件，免 Python 环境）。
+
+或者用 Python：
 
 ```bash
-# 安装依赖
 pip install -r requirements.txt
-# 或
-uv pip install pystray pillow pywin32
-
-# 启动
 python main.py
 ```
 
-双击 **`start.bat`** 也能一键启动。
+### 从源码构建
 
-## 操作指南
-
-| 操作 | 方式 |
-|------|------|
-| 暂停 / 继续 | 单击浮窗 |
-| 移动浮窗 | 按住浮窗拖拽 |
-| 调整大小 | 拖拽右下角 `╲╲╲` 把手 |
-| 右键菜单 | 右键浮窗或托盘图标 |
-| 设置 | 右键 → ⚙ Settings... |
-
-## 设置面板
-
-```
-⏱  TIMER DURATIONS    — 工作时长 / 短休息 / 长休息 / 长休息触发间隔
-⚙  BEHAVIOR           — 自动开始休息 / 自动开始工作
-🎨  APPEARANCE         — 7色预设 / 透明度 / 窗口置顶
-🎉  REWARDS            — 完成庆祝效果
+```bash
+pip install pyinstaller
+python build.bat
+# 输出: dist/PomodoroTimer.exe
 ```
 
-## 配置文件
+---
 
-首次启动后自动生成 `pomodoro_config.json`（也可通过图形设置面板修改）：
+## 🎮 操作指南
 
-```json
-{
-  "work_minutes": 25,
-  "short_break_minutes": 5,
-  "long_break_minutes": 15,
-  "sessions_before_long_break": 4,
-  "color_preset": "light",
-  "window_opacity": 0.88,
-  "always_on_top": true,
-  "reward_enabled": true
-}
+```
+ 左键单击  →  暂停 / 继续
+ 按住拖拽  →  移动浮窗
+ 右下角 `╲`  →  调整大小
+ 右键浮窗  →  菜单（开始/暂停/跳过/重置/颜色/设置/退出）
+ 右键托盘  →  同上
 ```
 
-## 技术栈
+**它不会：**
+- 出现在任务栏
+- 出现在 Alt+Tab 切换
+- 遮挡点击（透明区域穿透）
+- 消耗超过 12MB 内存
 
-- **Python 3.11** — 纯 Python，无 Electron
-- **tkinter** — 玻璃浮窗渲染，圆角裁剪
-- **pystray** — 系统托盘图标，菜单交互
-- **Pillow** — 托盘图标生成（32×32 RGBA）
-- **pywin32** — Windows API（圆角 SetWindowRgn、气泡通知）
+---
 
-## 项目结构
+## 🧩 项目结构
 
 ```
 pomodoro_timer/
-├── main.py         # 入口
-├── overlay.py      # 浮窗 UI + 拖拽 + 托盘
-├── pomtimer.py     # 计时器状态机
-├── config.py       # 配置 + 7 色预设
-├── settings.py     # 图形化设置对话框
-├── icon_gen.py     # Pillow 图标渲染
-├── notifier.py     # 通知模块
-├── start.bat       # 一键启动
+├── main.py          # 入口
+├── overlay.py       # 玻璃浮窗 + 拖拽 + 托盘
+├── pomtimer.py      # 计时状态机
+├── config.py        # 配置 + 7 色预设
+├── settings.py      # 设置面板
+├── icon_gen.py      # 托盘图标
+├── notifier.py      # 通知
+├── requirements.txt # 依赖清单
+├── build.bat        # 构建脚本
 └── README.md
 ```
 
-## 许可
+---
 
-MIT
+## 📝 许可
+
+MIT — 自由使用、修改、分发。
