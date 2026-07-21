@@ -1,11 +1,11 @@
-; Pomodoro Timer Installer -- NSIS Script
+; Pomi Installer -- NSIS Script
 Unicode true
 
 !include "MUI2.nsh"
 
-Name "Pomodoro Timer"
-OutFile "installer\PomodoroTimer_Setup_v1.0.0.exe"
-InstallDir "$PROGRAMFILES64\Pomodoro Timer"
+Name "Pomi"
+OutFile "installer\Pomi_Setup_v1.0.0.exe"
+InstallDir "$PROGRAMFILES64\Pomi"
 RequestExecutionLevel admin
 
 !define MUI_ABORTWARNING
@@ -28,19 +28,19 @@ Section "Install"
   File "dist\PomodoroTimer.exe"
   File "README.md"
 
-  CreateDirectory "$SMPROGRAMS\Pomodoro Timer"
-  CreateShortCut "$SMPROGRAMS\Pomodoro Timer\Pomodoro Timer.lnk" "$INSTDIR\PomodoroTimer.exe"
-  CreateShortCut "$SMPROGRAMS\Pomodoro Timer\Uninstall.lnk" "$INSTDIR\uninst.exe"
-  CreateShortCut "$DESKTOP\Pomodoro Timer.lnk" "$INSTDIR\PomodoroTimer.exe"
+  CreateDirectory "$SMPROGRAMS\Pomi"
+  CreateShortCut "$SMPROGRAMS\Pomi\Pomi.lnk" "$INSTDIR\PomodoroTimer.exe"
+  CreateShortCut "$SMPROGRAMS\Pomi\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$DESKTOP\Pomi.lnk" "$INSTDIR\PomodoroTimer.exe"
 
   WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PomodoroTimer" \
-    "DisplayName" "Pomodoro Timer"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PomodoroTimer" \
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Pomi" \
+    "DisplayName" "Pomi"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Pomi" \
     "UninstallString" "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PomodoroTimer" \
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Pomi" \
     "DisplayVersion" "1.0.0"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PomodoroTimer" \
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Pomi" \
     "Publisher" "VirginiaH233"
 SectionEnd
 
@@ -50,9 +50,9 @@ Section "Uninstall"
   Delete "$INSTDIR\README.md"
   Delete "$INSTDIR\uninst.exe"
   RMDir "$INSTDIR"
-  Delete "$SMPROGRAMS\Pomodoro Timer\Pomodoro Timer.lnk"
-  Delete "$SMPROGRAMS\Pomodoro Timer\Uninstall.lnk"
-  RMDir "$SMPROGRAMS\Pomodoro Timer"
-  Delete "$DESKTOP\Pomodoro Timer.lnk"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PomodoroTimer"
+  Delete "$SMPROGRAMS\Pomi\Pomi.lnk"
+  Delete "$SMPROGRAMS\Pomi\Uninstall.lnk"
+  RMDir "$SMPROGRAMS\Pomi"
+  Delete "$DESKTOP\Pomi.lnk"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Pomi"
 SectionEnd

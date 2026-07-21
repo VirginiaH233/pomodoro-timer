@@ -188,7 +188,7 @@ class PomodoroOverlay:
 
         # ── root window ──
         self.root = tk.Tk()
-        self.root.title("Pomodoro")
+        self.root.title("Pomi")
         self.root.overrideredirect(True)
         self.root.attributes("-topmost", config.always_on_top)
         # NOTE: -alpha NOT set here; applied via _set_window_alpha AFTER
@@ -737,7 +737,7 @@ class PomodoroOverlay:
 
     def _setup_tray(self):
         self.tray_icon = pystray.Icon(
-            "PomodoroTimer", _make_tray_icon(), _("focus", self.config.language),
+            "Pomi", _make_tray_icon(), _("focus", self.config.language),
             menu=self._build_tray_menu(),
         )
         t = threading.Thread(target=self.tray_icon.run, daemon=True)
@@ -808,7 +808,7 @@ class PomodoroOverlay:
             Phase.WORK: (_("notify_work_title", L),
                          _("notify_work_msg", L)),
         }
-        title, msg = msgs.get(phase, ("Pomodoro", "Phase changed"))
+        title, msg = msgs.get(phase, ("Pomi", "Phase changed"))
         try:
             if self.tray_icon:
                 self.tray_icon.notify(msg, title)
