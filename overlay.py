@@ -716,6 +716,7 @@ class PomodoroOverlay:
             menu.add_separator()
 
         menu.add_command(label=_("settings", L), command=self._open_settings)
+        menu.add_command(label=_("recall", L), command=self._recall)
         menu.add_command(label=_("quit", L), command=self._on_quit)
 
         menu.tk_popup(event.x_root, event.y_root)
@@ -774,6 +775,7 @@ class PomodoroOverlay:
                 items.append(pystray.MenuItem(_("skip", L), self._on_skip))
             items.append(pystray.MenuItem(_("reset", L), self._on_reset))
         items.append(pystray.Menu.SEPARATOR)
+        items.append(pystray.MenuItem(_("recall", L), self._recall))
         if self._embed_mode:
             items.append(pystray.MenuItem(
                 _("detach", L), self._exit_embed))
@@ -923,6 +925,26 @@ class PomodoroOverlay:
             pass
         self.root.quit()
         self.root.destroy()
+
+    def _recall(self):
+        """Force the overlay to show on top — for when it gets lost behind the taskbar."""
+        hwnd = self._hwnd()
+        self.root.deiconify()
+        self.root.lift()
+        _force_topmost(hwnd)
+        # Also reposition to a safe area if off-screen
+        try:
+            x = self.root.winfo_x()
+            y = self.root.winfo_y()
+            sw = self.root.winfo_screenwidth()
+            sh = self.root.winfo_screenheight()
+            if x < -self._win_w // 2 or x > sw:
+                x = sw - self._win_w - self.config.window_margin
+            if y < -self._win_h // 2 or y > sh - 20:
+                y = sh - self._win_h - self.config.window_margin - 52
+            self.root.geometry(f"+{x}+{y}")
+        except Exception:
+            pass
 
     def run(self):
         try:

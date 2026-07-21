@@ -17,6 +17,7 @@ LANG = {
         "settings": "⚙ Settings...",
         "quit": "✕ Quit",
         "detach": "⏏ Detach from taskbar",
+        "recall": "🔍 Bring to front",
         "color": "🎨 Color",
 
         # Phase names in header
@@ -114,6 +115,7 @@ LANG = {
         "settings": "⚙ 设置...",
         "quit": "✕ 退出",
         "detach": "⏏ 脱离任务栏",
+        "recall": "🔍 召回窗口",
         "color": "🎨 颜色",
 
         "phase_idle": "空闲",
