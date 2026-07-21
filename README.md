@@ -31,7 +31,7 @@
 
 ## ⚡ 下载
 
-📥 [蓝奏云下载](https://wwatp.lanzoum.com/iBWjD3xs8zjc密码:3aj4)（免安装，开袋即食）  
+📥 [蓝奏云下载](https://wwatp.lanzoum.com/iBWjD3xs8zjc)密码:3aj4（免安装，开袋即食）  
 📦 [GitHub Release](https://github.com/VirginiaH233/pomodoro-timer/releases)  
 📦 [GitHub 源码](https://github.com/VirginiaH233/pomodoro-timer)
 
