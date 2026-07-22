@@ -74,6 +74,7 @@ LANG = {
         "lbl_color": "Color preset",
         "lbl_opacity": "Transparency",
         "lbl_topmost": "Always on top",
+        "lbl_auto_start": "Start with Windows",
         "lbl_reward": "Show celebration on work complete",
         "lbl_language": "Language",
 
@@ -167,6 +168,7 @@ LANG = {
         "lbl_color": "颜色主题",
         "lbl_opacity": "透明度",
         "lbl_topmost": "浮窗不被遮挡",
+        "lbl_auto_start": "开机自启",
         "lbl_reward": "完成工作时显示庆祝动画",
         "lbl_language": "语言",
 

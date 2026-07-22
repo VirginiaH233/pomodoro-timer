@@ -1,5 +1,7 @@
 """Glass overlay with tray icon — Pomodoro timer UI."""
 
+import os
+import sys
 import threading
 import tkinter as tk
 import ctypes
@@ -739,6 +741,7 @@ class PomodoroOverlay:
                 _force_topmost(hwnd)
             self._refresh_all_colors()
             self._rebuild_tray_menu()
+            self._set_auto_start()
         SettingsDialog(self.root, self.config, on_save)
 
     # ── tray ─────────────────────────────────────────
@@ -766,16 +769,16 @@ class PomodoroOverlay:
             None, enabled=False))
         items.append(pystray.Menu.SEPARATOR)
         if self.timer.running:
-            items.append(pystray.MenuItem(_("pause", L), self._on_pause, default=True))
+            items.append(pystray.MenuItem(_("pause", L), self._on_pause))
         else:
             lbl = _("start", L) if phase == Phase.IDLE else _("resume", L)
-            items.append(pystray.MenuItem(lbl, self._on_start, default=True))
+            items.append(pystray.MenuItem(lbl, self._on_start))
         if phase != Phase.IDLE:
             if self.timer.running:
                 items.append(pystray.MenuItem(_("skip", L), self._on_skip))
             items.append(pystray.MenuItem(_("reset", L), self._on_reset))
         items.append(pystray.Menu.SEPARATOR)
-        items.append(pystray.MenuItem(_("recall", L), self._recall))
+        items.append(pystray.MenuItem(_("recall", L), self._recall, default=True))
         if self._embed_mode:
             items.append(pystray.MenuItem(
                 _("detach", L), self._exit_embed))
@@ -946,6 +949,26 @@ class PomodoroOverlay:
         except Exception:
             pass
 
+
+    def _set_auto_start(self):
+        """Write or remove registry key for Windows auto-start."""
+        import winreg
+        key = winreg.HKEY_CURRENT_USER
+        sub = r"Software\Microsoft\Windows\CurrentVersion\Run"
+        name = "Pomi"
+        try:
+            if self.config.auto_start:
+                with winreg.OpenKey(key, sub, 0, winreg.KEY_SET_VALUE) as k:
+                    exe_path = os.path.abspath(sys.argv[0])
+                    winreg.SetValueEx(k, name, 0, winreg.REG_SZ, exe_path)
+            else:
+                with winreg.OpenKey(key, sub, 0, winreg.KEY_SET_VALUE) as k:
+                    try:
+                        winreg.DeleteValue(k, name)
+                    except FileNotFoundError:
+                        pass
+        except Exception:
+            pass
     def run(self):
         try:
             self.root.mainloop()

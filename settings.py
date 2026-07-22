@@ -63,6 +63,7 @@ class SettingsDialog:
         self.opacity_var = tk.DoubleVar(value=config.window_opacity)
         self.topmost_var = tk.BooleanVar(value=config.always_on_top)
         self.reward_var = tk.BooleanVar(value=config.reward_enabled)
+        self.auto_start_var = tk.BooleanVar(value=config.auto_start)
         self.lang_var = tk.StringVar(value=config.language)
 
         # Sound variables
@@ -208,6 +209,7 @@ class SettingsDialog:
                       self._pct_lbl(f).pack(side="left"),
                   ))
 
+        self._row(scroll_frame, "", lambda f: self._chk(f, "lbl_auto_start", self.auto_start_var))
         self._row(scroll_frame, "", lambda f: self._chk(f, "lbl_topmost", self.topmost_var))
 
         # 🌐 Language
@@ -342,6 +344,7 @@ class SettingsDialog:
         self.config.embed_enabled = self.embed_var.get()
         self.config.color_preset = self.color_var.get()
         self.config.window_opacity = self.opacity_var.get()
+        self.config.auto_start = self.auto_start_var.get()
         self.config.always_on_top = self.topmost_var.get()
         self.config.reward_enabled = self.reward_var.get()
         self.config.language = self.lang_var.get()

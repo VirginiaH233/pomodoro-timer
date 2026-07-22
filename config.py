@@ -64,6 +64,7 @@ class PomodoroConfig:
     window_opacity: float = 0.88
     window_margin: int = 16
     always_on_top: bool = True
+    auto_start: bool = False
 
     # Behaviour
     embed_enabled: bool = True
@@ -104,7 +105,7 @@ class PomodoroConfig:
             "work_minutes", "short_break_minutes", "long_break_minutes",
             "sessions_before_long_break", "auto_start_breaks", "auto_start_work",
             "custom_name_work", "custom_name_short_break", "custom_name_long_break",
-            "color_preset", "window_opacity", "window_margin", "always_on_top",
+            "color_preset", "window_opacity", "window_margin", "always_on_top", "auto_start",
             "embed_enabled",
             "language",
             "reward_enabled", "reward_duration_sec",
