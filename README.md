@@ -26,6 +26,7 @@
 | 🖥 **系统托盘** | 右下角常驻图标，右键即出菜单 |
 | ⚙️ **图形设置** | 可视化调整所有参数，无需编辑 JSON |
 | 🎯 **零干扰** | 没有窗口边框、没有任务栏入口、不抢焦点 |
+| 🔤**English-enabled** | bilingual support for Chinese and English |
 
 ---
 
